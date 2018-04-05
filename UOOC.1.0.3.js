@@ -50,7 +50,6 @@ jQuery(function($) {
         ended: function() {
           console.log('end')
           if($(vId + ' ul').children().length != 0 && ++ssi < $(vId + ' ul').children().length){
-            ssi++;
             return process(ci);
           }
           if($(vId + ' ul').children().length != 0 && ssi == $(vId + ' ul').children().length){
