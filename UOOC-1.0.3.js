@@ -54,6 +54,7 @@ jQuery(function($) {
           }
           if($(vId + ' ul').children().length != 0 && ssi == $(vId + ' ul').children().length){
             ssi = 0;
+            si++;
             return process(ci);
           }
           if (++si == sList.length) {
