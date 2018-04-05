@@ -27,8 +27,7 @@ jQuery(function($) {
     let vId = '#' + sList[si];
     let video = $(vId + ' div.resourcelist.ng-scope');
     if (video.length == 0) {
-      $(vId).children().click();
-      video = $(vId + ' div.resourcelist.ng-scope');
+      return $(vId).children().click();
     }
 
     lock = 0;
@@ -36,7 +35,7 @@ jQuery(function($) {
     $(video.children()[vlid]).click();
     setTimeout(() => {
       $('#player_html5_api').trigger('play'); //播放
-      $("div[class*='vjs-vol-']").click(); //静音
+      $("div.vjs-volume-menu-button").click(); //静音
       $(".vjs-playback-rate ul[class='vjs-menu-content'] li")[0].click(); //变速
       $('#player_html5_api').on({ //监听视频结束
         pause: function() {
@@ -51,14 +50,13 @@ jQuery(function($) {
             $('#' + cList[cIndex]).children().click();
             setTimeout(()=>{
               $('#' + sList[si]).children("div[class*='complete']").click();
-              setTimeout(()=>{ return process(cIndex) },500)
-
-            }, 200)
+              return;
+            }, 1000)
           } else {
             setTimeout(() => {
               console.log("开始播放下一个视频");
               process(ci);
-            }, 500)
+            }, 1000)
           }
         }
       })
@@ -93,7 +91,7 @@ jQuery(function($) {
           section.children("div[class*='complete']").click(function(e) {
             console.log('section');
             setSectionIndex($(this).parent().attr('id'));
-            setTimeout(() => { process(cIndex) }, 200);
+            setTimeout(() => { process(cIndex) }, 1000);
           })
         }, 200)
       },100)
