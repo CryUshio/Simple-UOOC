@@ -6,6 +6,7 @@ jQuery(function($) {
   let cId = '';
   let sList = []; //sectionList
   let si = 0; //sectionIndex
+  let ssi = 0;
   let lock = 0;
 
   main();
@@ -14,7 +15,7 @@ jQuery(function($) {
     initial();
   }
 
-  function process(ci) {
+  async function process(ci) {
     console.log('in process');
     cId = cList[ci];
 
@@ -24,10 +25,15 @@ jQuery(function($) {
     }
     if (cIndex != 0 && cIndex == cList.length) return console.log("Process end! All thing's done!");
 
-    let vId = '#' + sList[si];
-    let video = $(vId + ' div.resourcelist.ng-scope');
-    if (video.length == 0) {
-      return $(vId).children().click();
+    let vId = '#' + sList[si];  //section 1.1
+    let video = '';
+    if($(vId + ' ul').length == 0) return $(vId).children().click(); //未展开
+    if($(vId + ' ul').children().length != 0){ //三级课程 1.1.1
+      $($(vId + ' ul').children()[ssi]).children().click();
+      await sleep(500);
+      video = $($($(vId + ' ul').children()[ssi]).children()[1]);
+    }else{
+      video = $(vId + ' div.resourcelist.ng-scope');
     }
 
     lock = 0;
@@ -43,6 +49,14 @@ jQuery(function($) {
         },
         ended: function() {
           console.log('end')
+          if($(vId + ' ul').children().length != 0 && ++ssi < $(vId + ' ul').children().length){
+            ssi++;
+            return process(ci);
+          }
+          if($(vId + ' ul').children().length != 0 && ssi == $(vId + ' ul').children().length){
+            ssi = 0;
+            return process(ci);
+          }
           if (++si == sList.length) {
             console.log("开始播放下一章");
             si = 0;
@@ -119,6 +133,10 @@ jQuery(function($) {
       if ($(item[i]).find('span.taskpoint').length != 0)
         return i;
     }
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
 });
