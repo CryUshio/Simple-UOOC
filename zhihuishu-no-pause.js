@@ -2,7 +2,7 @@ jQuery(function($) {
 	console.log('load');
     $('body').click(function(){
        console.log('listening'); 
-       $('#chapterList').click(function(){
+       $('li').click(function(){
             $("div.speedTab15").click(); //变速
             $("div.volumeIcon").click(); //静音
             $('#vjs_mediaplayer_html5_api').on({
