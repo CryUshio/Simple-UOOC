@@ -10,7 +10,7 @@ jQuery(function($) {
 			},
 			ended: function() {
 				alert('当前视频已经播放完毕！')
-			}
+			} 
 		})   
 	})
 });
